@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Build {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  type Type @default(nsis)
+
+  width          Int @default(1280)
+  height         Int @default(720)
+  minWidth       Int @default(800)
+  minHeight      Int @default(600)
+  maxWidth       Int @default(1920)
+  maxHeight      Int @default(1080)
+  resizable      Boolean @default(true)
+  fullscreen     Boolean @default(false)
+  hideMenu       Boolean @default(false)
+  systemButton   Boolean @default(true)
+  centerWindow   Boolean @default(true)
+  alwaysOnTop    Boolean @default(false)
+  frameless      Boolean @default(false)
+  backgroundColor String @default("#ffffff")
+  title          String
+  posX           Int @default(0)
+  posY           Int @default(0)
+
+  versionWorker  String
+  nodeIntegration  Boolean @default(false)
+  contextIsolation Boolean @default(true)
+  sandbox          Boolean @default(true)
+  devtools         Boolean @default(false)
+  hardwareAccel   Boolean @default(true)
+  chromiumFlags   String?
+
+  name        String
+  version     String
+  description String
+  author      String
+  license     String
+  appId       String
+  startUrl    String
+
+  domainWhitelist  String?
+  domainBlacklist  String?
+  redirectURLUnDom String
+  authSubdom      Boolean @default(false)
+  authHTTP        Boolean @default(false)
+  authHTTPS       Boolean @default(true)
+  blockWindowOpen Boolean @default(false)
+  authNewWindow   Boolean @default(false)
+  winLink         Boolean @default(false)
+
+  status BuildStatus @default(QUEUED)
+
+  buildFile String?
+  error     String?
+
+  startedAt  DateTime?
+  finishedAt DateTime?
+}
+
+enum BuildStatus {
+  QUEUED
+  BUILDING
+  SUCCESS
+  FAILED
+  SCANNING
+}
+
+enum Type {
+  nsis
+  portable
+  msi
+  appimage
+  deb
+  rpm
+}

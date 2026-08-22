@@ -1,0 +1,28 @@
+{
+  "name": "ezwinapp",
+  "version": "1.0.0",
+  "description": "This project offers everyone—coders and non-coders alike—the ability to package their WebApp into a Windows, Linux, or macOS application. It takes the form of a web platform where you simply upload your WebApp files or provide a domain, an entry point, allowed domains, and a 404.html page; you can then build and download your .exe file.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/adapter-mariadb": "^7.9.1",
+    "@prisma/client": "^7.9.1",
+    "express": "^5.2.1",
+    "prisma": "^7.9.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
+}

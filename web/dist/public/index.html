@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinBuilder</title>
+  <script src="index.js"></script>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --success-color: #2ecc71;
+      --error-color: #e74c3c;
+      --border-radius: 4px;
+      --box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f7fa;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+
+    section {
+      background-color: white;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+
+    fieldset {
+      border: 1px solid #e0e0e0;
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    legend {
+      font-weight: 600;
+      color: var(--primary-color);
+      padding: 0 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      box-sizing: border-box;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+    }
+
+    input[type="color"] {
+      width: 100px;
+      height: 40px;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .checkbox-group input {
+      margin-right: 10px;
+    }
+
+    button {
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .build-section {
+      background-color: #f8f9fa;
+      border-top: 3px solid var(--secondary-color);
+    }
+
+    .build-section h2 {
+      color: var(--secondary-color);
+      margin-top: 0;
+    }
+
+    /* Nouvelle classe pour la barre de chargement */
+    .loading-container {
+      display: none;
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: var(--border-radius);
+      text-align: center;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background-color: #e9ecef;
+      border-radius: 10px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: var(--secondary-color);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .status-message {
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .success {
+      color: var(--success-color);
+    }
+
+    .error {
+      color: var(--error-color);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      section {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>WinBuilder</h1>
+    <p>Pack your application with customizable options</p>
+  </header>
+
+  <section id="technical-options">
+    <h2>Technical Options</h2>
+
+    <fieldset>
+      <legend>Window Dimensions</legend>
+
+      <div class="form-group">
+        <label for="Width">Width (px):</label>
+        <input type="text" id="Width" placeholder="Width">
+      </div>
+
+      <div class="form-group">
+        <label for="Height">Height (px):</label>
+        <input type="text" id="Height" placeholder="Height">
+      </div>
+
+      <div class="form-group">
+        <label for="MinWidth">Minimum Width (px):</label>
+        <input type="text" id="MinWidth" placeholder="Min Width">
+      </div>
+
+      <div class="form-group">
+        <label for="MinHeight">Minimum Height (px):</label>
+        <input type="text" id="MinHeight" placeholder="Min Height">
+      </div>
+
+      <div class="form-group">
+        <label for="MaxWidth">Maximum Width (px):</label>
+        <input type="text" id="MaxWidth" placeholder="Max Width">
+      </div>
+
+      <div class="form-group">
+        <label for="MaxHeight">Maximum Height (px):</label>
+        <input type="text" id="MaxHeight" placeholder="Max Height">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Window Behavior</legend>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="Resizable">
+        <label for="Resizable">Resizable window</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="Fullscreen">
+        <label for="Fullscreen">Fullscreen mode</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="AlwaysOnTop">
+        <label for="AlwaysOnTop">Always on top</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="Frameless">
+        <label for="Frameless">Frameless window</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="HideMenu">
+        <label for="HideMenu">Hide menu bar</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="SystemButton">
+        <label for="SystemButton">Hide system buttons</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="CenterWindow">
+        <label for="CenterWindow">Center the window ?</label>
+      </div>
+
+      <div class="form-group">
+        <label for="BackgroundColor">Background Color:</label>
+        <input type="color" id="BackgroundColor" value="#ffffff">
+      </div>
+
+      <div class="form-group">
+        <label for="Title">Window Title:</label>
+        <input type="text" id="Title" placeholder="Title">
+      </div>
+
+      <div class="form-group">
+        <label for="PosX">Pos X:</label>
+        <input type="number" id="PosX" placeholder="PosX">
+      </div>
+
+      <div class="form-group">
+        <label for="PosY">Pos Y:</label>
+        <input type="number" id="PosY" placeholder="PosY">
+      </div>
+    </fieldset>
+  </section>
+
+  <section id="worker-options">
+    <h2>Worker Options</h2>
+
+    <div class="form-group">
+      <label for="version">Worker Version:</label>
+      <input type="text" id="version" value="1.0.0" readonly>
+    </div>
+
+    <fieldset>
+      <legend>Security Settings</legend>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="NodeInte">
+        <label for="NodeInte">Node.js Integration</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="ContextIsolation">
+        <label for="ContextIsolation">Context Isolation</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="Sandbox">
+        <label for="Sandbox">Sandbox Mode</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="devtools">
+        <label for="devtools">Enable DevTools</label>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" id="HardwareAccel">
+        <label for="HardwareAccel">Hardware Acceleration</label>
+      </div>
+
+      <div class="form-group">
+        <label for="ChromiumFlags">Chromium Flags:</label>
+        <input type="text" id="ChromiumFlags" placeholder="e.g. --disable-gpu --enable-logging">
+      </div>
+    </fieldset>
+  </section>
+
+  <section id="app-options">
+    <h2>Application Information</h2>
+
+    <div class="form-group">
+      <label for="Name">Application Name:</label>
+      <input type="text" id="Name" placeholder="Name">
+    </div>
+
+    <div class="form-group">
+      <label for="Version">Version:</label>
+      <input type="text" id="Version" placeholder="Version">
+    </div>
+
+    <div class="form-group">
+      <label for="Description">Description:</label>
+      <input type="text" id="Description" placeholder="Description">
+    </div>
+
+    <div class="form-group">
+      <label for="Author">Author:</label>
+      <input type="text" id="Author" placeholder="Author">
+    </div>
+
+    <div class="form-group">
+      <label for="Licence">License:</label>
+      <input type="text" id="Licence" placeholder="Licence">
+    </div>
+
+    <div class="form-group">
+      <label for="AppId">Application ID:</label>
+      <input type="text" id="AppId" placeholder="AppId">
+    </div>
+
+    <div class="form-group">
+      <label for="StartUrl">Start URL:</label>
+      <input type="url" id="StartUrl" placeholder="Start url">
+    </div>
+
+    <div class="form-group">
+      <label for="DomainWl">Domain Whitelist:</label>
+      <input type="text" id="DomainWl" placeholder="Domain Whitelist">
+    </div>
+
+    <div class="form-group">
+      <label for="DomainBl">Domain Blacklist:</label>
+      <input type="text" id="DomainBl" placeholder="Domain Blacklist">
+    </div>
+
+    <div class="form-group">
+      <label for="RedirectURLUnDom">Redirect URL if unauthorized domain:</label>
+      <input type="url" id="RedirectURLUnDom" placeholder="Redirect URL">
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="authSubdom">
+      <label for="authSubdom">Authorize subdomain</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="authHTTP">
+      <label for="authHTTP">Authorize HTTP</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="authHTTPS">
+      <label for="authHTTPS">Authorize HTTPS</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="winOpenBlock">
+      <label for="winOpenBlock">Block Window.open</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="winNewWin">
+      <label for="winNewWin">Authorize new window ?</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="winLink">
+      <label for="winLink">Open extern link in system browser</label>
+    </div>
+  </section>
+
+  <section id="build-options">
+    <h2>Build Options</h2>
+
+    <h3>Windows Builds</h3>
+    <button onclick="submit('nsis')">Generate NSIS Installer</button>
+    <button onclick="submit('portable')">Generate Portable Build</button>
+    <button onclick="submit('msi')">Generate MSI Installer</button>
+
+    <h3>Linux Builds</h3>
+    <button onclick="submit('appimage')">Generate AppImage</button>
+    <button onclick="submit('deb')">Generate DEB Package</button>
+    <button onclick="submit('rpm')">Generate RPM Package</button>
+  </section>
+
+  <section class="build-section" id="build-progress">
+    <h2>Build Progress</h2>
+
+    <div class="loading-container" id="loadingContainer">
+      <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+      <div class="status-message" id="statusMessage">Preparing your build...</div>
+    </div>
+  </section>
+</body>
+</html>
