@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000"
+const API_URL = "http://[2a01:4f9:3a:276e::1593]:3000"
 const POLLING_INTERVAL = 5000;
 const MAX_POLLING_ATTEMPTS = 200; 
 
